@@ -1,27 +1,19 @@
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+package jdaleki.kafka.twitter;
+
+import java.io.*;
 import java.util.Properties;
 
 public class ConfigReader {
-    private String fileName = "config.properties";
+    private String fileName = "./kafka-tutorial/kafka-twitter-producer/resources/config.properties";
     private Properties prop;
 
-    public ConfigReader() {
+    public ConfigReader() throws IOException {
         prop = new Properties();
-        String fileName = "app.config";
-        InputStream is = null;
-        try {
-            is = new FileInputStream(fileName);
-        } catch (FileNotFoundException ex) {
+        InputStream inputStream = null;
 
-        }
-        try {
-            prop.load(is);
-        } catch (IOException ex) {
+        inputStream = new FileInputStream(fileName);
+        prop.load(inputStream);
 
-        }
     }
 
     public Properties getConfig() {

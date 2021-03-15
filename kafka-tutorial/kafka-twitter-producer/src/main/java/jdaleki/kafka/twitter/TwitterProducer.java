@@ -18,6 +18,7 @@ import org.apache.kafka.common.serialization.StringSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.BlockingQueue;
@@ -26,15 +27,23 @@ import java.util.concurrent.TimeUnit;
 
 public class TwitterProducer {
     Logger logger = LoggerFactory.getLogger(TwitterProducer.class.getName());
-    String consumerKey = "PEQP0MbbRwi66yuULXsJWxbJD";
-    String consumerSecret = "BZQ7mIsQB7vDcqVVIseNeMsNkB0QGyoW0SG7PHqJ1CcueYMCHL";
-    String token = "1348738935783092226-88zmAqOVn2DaKkkNkhHnTWBvdSxUYv";
-    String secret = "lFASOXy7tKoO6wDdZDJ7VCSHs4RAmDc6O6CeDUayHlHmM";
+    String consumerKey;
+    String consumerSecret;
+    String token;
+    String secret;
     List<String> terms = Lists.newArrayList("spark");
 
-    public static void main(String[] args) {
-        new TwitterProducer().run();
+    public TwitterProducer() throws IOException {
+        ConfigReader configReader = new ConfigReader();
+        Properties properties = configReader.getConfig();
+        consumerKey = properties.getProperty("consumerKey");
+        consumerSecret = properties.getProperty("consumerSecret");
+        token = properties.getProperty("token");
+        secret = properties.getProperty("secret");
+
     }
+
+    public static void main(String[] args) throws IOException { new TwitterProducer().run(); }
 
     public void run() {
 
